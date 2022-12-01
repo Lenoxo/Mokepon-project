@@ -18,7 +18,7 @@
             } else if(jugada == 3){
                 resultado = "Tijera ✂"
             } else{
-                resultado = "CAGARLA"
+                resultado = "CAGARLA 🙌"
             }
             return resultado
         }
@@ -26,15 +26,15 @@
         function decidirResultado(personaUno, personaDos){
             resultadoRonda = ""
             if(personaUno == personaDos){
-            resultadoRonda = "Empate"
+            resultadoRonda = "Empate 🙆‍♂️"
         }   else if(personaUno == 2 && personaDos == 1){
-                resultadoRonda = "Ganaste"
+                resultadoRonda = "Ganaste 🥳🎉"
         }   else if(jugador == 1 && pc == 3){
-                resultadoRonda = "Ganaste" 
+                resultadoRonda = "Ganaste 🥳🎉"
         }   else if(jugador == 3 && pc == 2){
-                resultadoRonda = "Ganaste"
+                resultadoRonda = "Ganaste 🥳🎉"
         }   else {
-                resultadoRonda = "Perdiste"
+                resultadoRonda = "Perdiste 😣"
         } return resultadoRonda
         }
         // 1 es piedra, 2 es papel, 3 es tijera
