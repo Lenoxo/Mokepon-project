@@ -52,13 +52,12 @@
             // Resultado de la ronda
             alert("Resultado de la ronda: " + decidirResultado(jugador, pc))
             if(decidirResultado(jugador, pc) == "Ganaste 🥳🎉"){
-                victoriasJugador = victorias + 1
+                victoriasJugador = victoriasJugador + 1
             } else if(decidirResultado(jugador, pc) == "Perdiste 😣") {
                 derrotasJugador = derrotasJugador + 1
             }
         }
         alert("Ganaste " + victoriasJugador + " veces. Perdiste " + derrotasJugador + " veces.")
-
     </script>
 </head>
 <body>
