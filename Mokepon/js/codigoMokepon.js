@@ -1,7 +1,15 @@
 let ataqueJugador
 let ataqueEnemigo
 let resultadoRonda
+let vidasJugador = 3
+let vidasEnemigo = 3
 function iniciarJuego(){
+    //Codigo para ocultar secciones de seleccionar ataque y reiniciar
+    let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
+    sectionSeleccionarAtaque.style.display = "none"
+    let sectionReiniciar = document.getElementById("reiniciar")
+    sectionReiniciar.style.display = "none"
+    //addEventListeners que permiten disparar funciones con los clicks
     let botonSeleccionarMascota = document.getElementById("boton-mascota")
     botonSeleccionarMascota.addEventListener("click", elegirMascotaJugador)
     let botonFuego = document.getElementById("boton-ataque-fuego")
@@ -10,6 +18,8 @@ function iniciarJuego(){
     botonAgua.addEventListener("click", ataqueAgua)
     let botonTierra = document.getElementById("boton-ataque-tierra")
     botonTierra.addEventListener("click", ataqueTierra)
+    let botonReiniciar = document.getElementById("boton-reiniciar")
+    botonReiniciar.addEventListener("click", reiniciarJuego)
 }
 //Función para obtener números aleatorios
 function aleatorio(min, max){
@@ -17,6 +27,12 @@ function aleatorio(min, max){
 }
 //la propiedad innerHTML permite modificar el DOM con strings que se ponen dentro de una etiqueta escogida anteriormente
 function elegirMascotaJugador(){
+    //Codigo para ocultar la sección de seleccionar mascota y mostrar la sección de seleccionar ataque
+    let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
+    sectionSeleccionarAtaque.style.display = "block"
+    let sectionSeleccionarMascota = document.getElementById("seleccionar-mascota")
+    sectionSeleccionarMascota.style.display = "none"
+
     let inputHipodoge = document.getElementById("hipodoge")
     let inputCapipepo = document.getElementById("capipepo")
     let inputRatigueya = document.getElementById("ratigueya")
@@ -47,7 +63,7 @@ function elegirMascotaEnemigo(){
         spanMascotaEnemigo.innerHTML = "Capipepo"
     } else{
         spanMascotaEnemigo.innerHTML = "Ratigueya"
-    }
+    } 
 }
 //Funciones para el ataque del jugador
 function ataqueFuego(){
@@ -94,8 +110,45 @@ function crearMensaje(){
     let parrafo = document.createElement("p")
     parrafo.innerHTML = "Tu mascota atacó con " + ataqueJugador + ", la mascota enemiga atacó con " + ataqueEnemigo + " - " + resultadoRonda
     sectionMensajesRonda.appendChild(parrafo)
+    //Condicional para contar las vidas del jugador y del enemigo
+    let spanVidasJugador = document.getElementById("vidas-jugador")
+    let spanVidasEnemigo = document.getElementById("vidas-enemigo")
+        if(resultadoRonda == "GANASTE🎉🎉🎉"){
+            vidasEnemigo--
+            spanVidasEnemigo.innerHTML = vidasEnemigo
+        } else if(resultadoRonda == "PERDISTE😣😣😣") {
+            vidasJugador--
+            spanVidasJugador.innerHTML = vidasJugador
+        }
+    //Condicional para determinar el resultado de la partida
+    if(vidasJugador == 0){
+        alert("Ha finalizado la partida, has perdido la batalla 😣😣😣")
+        parrafo.innerHTML = "Es una pena, pero puedes volver a intentar ganar, dale click a reiniciar si lo deseas."
+        sectionMensajesRonda.appendChild(parrafo)
+        deshabilitarBotonesAtaque()
+    } else if(vidasEnemigo == 0){
+        alert("Ha finalizado la partida, has ganado la batalla 😎😎😎")
+        parrafo.innerHTML = "Wow, estás dominando la partida, ¿que tal intentar conseguir una racha de victorias?, dale click a reiniciar para ponerte a prueba"
+        sectionMensajesRonda.appendChild(parrafo)
+        deshabilitarBotonesAtaque()
+    }
 }
-
+//Función para deshabilitar los botones de ataque
+function deshabilitarBotonesAtaque(){
+    let botonFuego = document.getElementById("boton-ataque-fuego")
+    botonFuego.disabled = true
+    let botonAgua = document.getElementById("boton-ataque-agua")
+    botonAgua.disabled = true
+    let botonTierra = document.getElementById("boton-ataque-tierra")
+    botonTierra.disabled = true
+    //Codigo que muestra la sección del botón reiniciar
+    let sectionReiniciar = document.getElementById("reiniciar")
+    sectionReiniciar.style.display = "block"
+}
+//Función para reiniciar el juego
+function reiniciarJuego(){
+    location.reload()
+}
 //load es el evento en el que la página HTML termina de cargar
 window.addEventListener("load", iniciarJuego)
 
