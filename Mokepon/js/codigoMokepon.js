@@ -29,7 +29,7 @@ function aleatorio(min, max){
 function elegirMascotaJugador(){
     //Codigo para ocultar la sección de seleccionar mascota y mostrar la sección de seleccionar ataque
     let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
-    sectionSeleccionarAtaque.style.display = "block"
+    sectionSeleccionarAtaque.style.display = "flex"
     let sectionSeleccionarMascota = document.getElementById("seleccionar-mascota")
     sectionSeleccionarMascota.style.display = "none"
 
@@ -106,10 +106,20 @@ function determinarResultadoRonda(){
 }
 //Función para añadir un nuevo parrafo con el resultado de la ronda
 function crearMensaje(){
-    let sectionMensajesRonda = document.getElementById("mensajes")
-    let parrafo = document.createElement("p")
-    parrafo.innerHTML = "Tu mascota atacó con " + ataqueJugador + ", la mascota enemiga atacó con " + ataqueEnemigo + " - " + resultadoRonda
-    sectionMensajesRonda.appendChild(parrafo)
+    let sectionResultado = document.getElementById("resultado")
+    let sectionAtaqueJugador = document.getElementById("ataque-jugador")
+    let sectionAtaqueEnemigo = document.getElementById("ataque-enemigo")
+    
+    let nuevoAtaqueJugador = document.createElement("p")
+    let nuevoAtaqueEnemigo =  document.createElement("p")
+
+    sectionResultado.innerHTML = resultadoRonda
+    nuevoAtaqueJugador.innerHTML = ataqueJugador
+    nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo
+
+    sectionAtaqueJugador.appendChild(nuevoAtaqueJugador)
+    sectionAtaqueEnemigo.appendChild(nuevoAtaqueEnemigo)
+
     //Condicional para contar las vidas del jugador y del enemigo
     let spanVidasJugador = document.getElementById("vidas-jugador")
     let spanVidasEnemigo = document.getElementById("vidas-enemigo")
@@ -123,13 +133,11 @@ function crearMensaje(){
     //Condicional para determinar el resultado de la partida
     if(vidasJugador == 0){
         alert("Ha finalizado la partida, has perdido la batalla 😣😣😣")
-        parrafo.innerHTML = "Es una pena, pero puedes volver a intentar ganar, dale click a reiniciar si lo deseas."
-        sectionMensajesRonda.appendChild(parrafo)
+        sectionResultado.innerHTML = "Es una pena, pero puedes volver a intentar ganar, dale click a reiniciar si lo deseas."
         deshabilitarBotonesAtaque()
     } else if(vidasEnemigo == 0){
         alert("Ha finalizado la partida, has ganado la batalla 😎😎😎")
-        parrafo.innerHTML = "Wow, estás dominando la partida, ¿que tal intentar conseguir una racha de victorias?, dale click a reiniciar para ponerte a prueba"
-        sectionMensajesRonda.appendChild(parrafo)
+        sectionResultado.innerHTML = "Wow, estás dominando la partida, ¿que tal intentar conseguir una racha de victorias?, dale click a reiniciar para ponerte a prueba"
         deshabilitarBotonesAtaque()
     }
 }
@@ -151,5 +159,3 @@ function reiniciarJuego(){
 }
 //load es el evento en el que la página HTML termina de cargar
 window.addEventListener("load", iniciarJuego)
-
-

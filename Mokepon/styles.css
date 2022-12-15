@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&family=Sigmar+One&display=swap');
+
+body {
+    background-color: #2B3A55;
+    font-family: "Sigmar One", cursive;
+    text-align: center;
+}
+
+#seleccionar-mascota {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.titulo-mokepon {
+    color: #FFFBEB;
+    font-family: "Shojumaru", cursive;
+    font-size: 40px;
+}
+.subtitulo-mokepon {
+    color: #FFFBEB;
+    font-size: 24px;
+}
+
+.contenedor-botones-mascotas {
+    display: flex;
+    gap: 10px;
+}
+.contenedor-botones-mascotas img {
+    width: 170px;
+}
+.botones-mascotas {
+    width: 200px;
+    height: 304px;
+    padding: 8px;
+    border: 8px groove #EC9B3B;
+    box-sizing: border-box;
+    margin: 5px;
+    color: #411530;
+    background: #FFE15D;
+    border-radius: 57px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column-reverse;
+}
+.emojis {
+    font-size: 28px;
+    margin: 5px;
+}
+.boton-seleccionar-mascota {
+    margin: 52px;
+    font-size: 18px;
+    color: #FFFBEB;
+    border: 8px groove #9C254D;
+    border-radius: 20px;
+    background: #411530;
+    font-family: "Sigmar One", cursive;
+}
+input {
+    display: none
+}
+
+#seleccionar-ataque {
+    flex-direction: column;
+    align-items: center;
+}
+.boton-ataque {
+    border: 8px groove #EC9B3B;
+    background: #FFE15D;
+    color: #411530;
+    font-family: "Sigmar One", cursive;
+    padding: 10px;
+    border-radius: 36px;
+}
+
+#mensajes {
+    display: flex;
+    flex-direction: column;
+    background: #227C70;
+    color: white;
+    border-radius: 24px;
+    align-items: center;
+    width: 480px;
+    padding: 10px;
+    margin: 20px;
+}
+
+#boton-reiniciar {
+    font-size: 18px;
+    color: #FFFBEB;
+    border: 8px groove #9C254D;
+    border-radius: 20px;
+    background: #411530;
+    font-family: "Sigmar One", cursive;
+}
+
+#vidas-y-ataques {
+    display: flex;
+    gap: 20px;
+    background: #434242;
+    border-radius: 20px;
+    color: white;
+    border: 8px groove #9C254D;
+}
+
+.hud-jugador {
+    border-right: 8px groove #9C254D;
+    padding: 5px;
+}
+
+.hud-enemigo {
+    border-left: 8px groove #9C254D;
+    padding: 5px;
+}
