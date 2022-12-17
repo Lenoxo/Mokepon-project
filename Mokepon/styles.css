@@ -7,7 +7,6 @@ body {
 }
 
 #seleccionar-mascota {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,6 +61,10 @@ input {
     display: none
 }
 
+input:checked + label {
+    background-color: #b6a24a;
+}
+
 #seleccionar-ataque {
     flex-direction: column;
     align-items: center;
@@ -73,6 +76,9 @@ input {
     font-family: "Sigmar One", cursive;
     padding: 10px;
     border-radius: 36px;
+}
+.boton-ataque:hover {
+    background-color: #b6a24a;
 }
 
 #mensajes {
@@ -97,8 +103,9 @@ input {
 }
 
 #vidas-y-ataques {
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 200px 200px;
+    gap: 4px;
     background: #434242;
     border-radius: 20px;
     color: white;
@@ -113,4 +120,17 @@ input {
 .hud-enemigo {
     border-left: 8px groove #9C254D;
     padding: 5px;
+}
+
+
+@media (max-width: 360px){
+    .contenedor-botones-mascotas {
+        flex-direction: column;
+    }
+    #vidas-y-ataques {
+        grid-template-columns: 124px 124px;
+    }
+    #mensajes {
+        width: 280px;
+    }
 }
