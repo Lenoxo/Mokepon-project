@@ -65,6 +65,15 @@ input:checked + label {
     background-color: #b6a24a;
 }
 
+#ver-mapa {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#mapa {
+    border: 2px groove whitesmoke;
+}
+
 #seleccionar-ataque {
     flex-direction: column;
     align-items: center;

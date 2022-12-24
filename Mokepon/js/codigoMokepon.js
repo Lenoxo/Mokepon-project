@@ -1,7 +1,6 @@
 const sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
 const sectionReiniciar = document.getElementById("reiniciar")
 const botonSeleccionarMascota = document.getElementById("boton-mascota")
-
 const botonReiniciar = document.getElementById("boton-reiniciar")
 const sectionSeleccionarMascota = document.getElementById("seleccionar-mascota")
 const spanMascotaJugador = document.getElementById("mascota-jugador")
@@ -9,29 +8,27 @@ const spanMascotaEnemigo = document.getElementById("mascota-enemigo")
 const sectionResultado = document.getElementById("resultado")
 const sectionAtaqueJugador = document.getElementById("ataque-jugador")
 const sectionAtaqueEnemigo = document.getElementById("ataque-enemigo")
-const spanVidasJugador = document.getElementById("vidas-jugador")
-const spanVidasEnemigo = document.getElementById("vidas-enemigo")
+const spanVidasJugador = document.getElementById("victorias-jugador")
+const spanVidasEnemigo = document.getElementById("victorias-enemigo")
 const contenedorTarjetasMokepon = document.getElementById("contenedor-tarjetas-mascotas")
 const contenedorAtaques = document.getElementById("contenedor-botones-ataques")
+const sectionVerMapa = document.getElementById("ver-mapa")
+const mapa = document.getElementById("mapa")
 
 let inputHipodoge
 let inputCapipepo
 let inputRatigueya
 let tarjetaMokepon
-let botonFuego
-let botonAgua
-let botonTierra
 let ataquesMascotaEnemigo
 let botones = []
-let arrayAtaqueJugador = []
+let ataqueJugador = []
 let indexAtaqueJugador
 let indexAtaqueEnemigo
-
-let ataqueJugador
 let ataqueEnemigo = []
 let resultadoRonda
-let vidasJugador = 3
-let vidasEnemigo = 3
+let victoriasJugador = 0
+let victoriasEnemigo = 0
+let lienzo = mapa.getContext("2d")
 
 let mokepones = []
 
@@ -92,9 +89,6 @@ function iniciarJuego(){
     })
 
     //addEventListeners que permiten disparar funciones con los clicks
-    // botonFuego.addEventListener("click", ataqueFuego)
-    // botonAgua.addEventListener("click", ataqueAgua)
-    // botonTierra.addEventListener("click", ataqueTierra)
     botonSeleccionarMascota.addEventListener("click", elegirMascotaJugador)
     botonReiniciar.addEventListener("click", reiniciarJuego)
 }
@@ -105,8 +99,19 @@ function aleatorio(min, max){
 //la propiedad innerHTML permite modificar el DOM con strings que se ponen dentro de una etiqueta escogida anteriormente
 function elegirMascotaJugador(){
     //Codigo para ocultar la sección de seleccionar mascota y mostrar la sección de seleccionar ataque
-    sectionSeleccionarAtaque.style.display = "flex"
     sectionSeleccionarMascota.style.display = "none"
+    sectionVerMapa.style.display = "flex"
+    let imagenMascota = new Image()
+    imagenMascota.src = capipepo.foto
+    lienzo.drawImage(
+        imagenMascota,
+        5,
+        5,
+        50,
+        50
+    )
+    // sectionSeleccionarAtaque.style.display = "flex"
+    
     //Esta condicional interactua con la elección del jugador
     switch (true){
         case inputHipodoge.checked:
@@ -153,10 +158,6 @@ function cargarAtaques(ataques){
         botonAtaques = `<button id=${ataque.nombre} class="boton-ataque BAtaque">${ataque.emoji}</button>`
         contenedorAtaques.innerHTML += botonAtaques
     })
-
-    botonFuego = document.getElementById("FUEGO")
-    botonAgua = document.getElementById("AGUA")
-    botonTierra = document.getElementById("TIERRA")
     botones = document.querySelectorAll(".BAtaque")
 
 }
@@ -165,18 +166,18 @@ function secuenciaAtaque(){
     botones.forEach((boton) => {
         boton.addEventListener("click", (e) => {
             if (e.target.textContent === "🔥") {
-                arrayAtaqueJugador.push("FUEGO")
-                console.log(arrayAtaqueJugador)
+                ataqueJugador.push("FUEGO")
+                console.log(ataqueJugador)
                 boton.style.background = "#b6a24a"
                 boton.disabled = true
             } else if(e.target.textContent === "💧"){
-                arrayAtaqueJugador.push("AGUA")
-                console.log(arrayAtaqueJugador)
+                ataqueJugador.push("AGUA")
+                console.log(ataqueJugador)
                 boton.style.background = "#b6a24a"
                 boton.disabled = true
             } else {
-                arrayAtaqueJugador.push("TIERRA")
-                console.log(arrayAtaqueJugador)
+                ataqueJugador.push("TIERRA")
+                console.log(ataqueJugador)
                 boton.style.background = "#b6a24a"
                 boton.disabled = true
             }
@@ -200,39 +201,42 @@ function ataqueEnemigoAleatorio(){
 }
 
 function iniciarCombate(){
-    if(arrayAtaqueJugador.length === 5){
+    if(ataqueJugador.length === 5){
         determinarResultadoRonda()
     }
 }
 
 function indexAmbosOponentes(jugador, enemigo){
-    indexAtaqueJugador = arrayAtaqueJugador[jugador]
+    indexAtaqueJugador = ataqueJugador[jugador]
     indexAtaqueEnemigo = ataqueEnemigo[enemigo]
 }
 
 //Función para determinar el ganador de la ronda
 function determinarResultadoRonda(){
 
-    for (let index = 0; index < arrayAtaqueJugador.length; index++) {
-        if (arrayAtaqueJugador[index] === ataqueEnemigo[index]) {
+    for (let index = 0; index < ataqueJugador.length; index++) {
+        if (ataqueJugador[index] === ataqueEnemigo[index]) {
+            indexAmbosOponentes(index, index)
             resultadoRonda = "EMPATASTE 🙆‍♂️"
+            crearMensaje()
+        } else if(ataqueJugador[index] === "FUEGO" && ataqueEnemigo[index] === "TIERRA"){
             indexAmbosOponentes(index, index)
-        } else if(arrayAtaqueJugador[index] === "FUEGO" && ataqueEnemigo[index] === "TIERRA"){
             resultadoRonda = "GANASTE🎉🎉🎉"
+            crearMensaje()
+        } else if(ataqueJugador[index] === "TIERRA" && ataqueEnemigo[index] === "AGUA"){
             indexAmbosOponentes(index, index)
-        } else if(arrayAtaqueJugador[index] === "TIERRA" && ataqueEnemigo[index] === "AGUA"){
             resultadoRonda = "GANASTE🎉🎉🎉"
+            crearMensaje()
+        } else if(ataqueJugador[index] === "AGUA" && ataqueEnemigo[index] === "FUEGO"){
             indexAmbosOponentes(index, index)
-        } else if(arrayAtaqueJugador[index] === "AGUA" && ataqueEnemigo[index] === "FUEGO"){
             resultadoRonda = "GANASTE🎉🎉🎉"
-            indexAmbosOponentes(index, index)
+            crearMensaje()
         } else{
-            resultadoRonda = "PERDISTE😣😣😣"
             indexAmbosOponentes(index, index)
-        } crearMensaje()
+            resultadoRonda = "PERDISTE😣😣😣"
+            crearMensaje()
+        } 
     }
-
-  
 }
 //Función para añadir un nuevo parrafo con el resultado de la ronda
 function crearMensaje(){  
@@ -248,28 +252,26 @@ function crearMensaje(){
 
     //Condicional para contar las vidas del jugador y del enemigo
         if(resultadoRonda == "GANASTE🎉🎉🎉"){
-            vidasEnemigo--
-            spanVidasEnemigo.innerHTML = vidasEnemigo
+            victoriasJugador++
+            spanVidasJugador.innerHTML = victoriasJugador
         } else if(resultadoRonda == "PERDISTE😣😣😣") {
-            vidasJugador--
-            spanVidasJugador.innerHTML = vidasJugador
+            victoriasEnemigo++
+            spanVidasEnemigo.innerHTML = victoriasEnemigo
         }
     //Condicional para determinar el resultado de la partida
-    if(vidasJugador == 0){
-        alert("Ha finalizado la partida, has perdido la batalla 😣😣😣")
-        sectionResultado.innerHTML = "Es una pena, pero puedes volver a intentar ganar, dale click a reiniciar si lo deseas."
-        deshabilitarBotonesAtaque()
-    } else if(vidasEnemigo == 0){
-        alert("Ha finalizado la partida, has ganado la batalla 😎😎😎")
-        sectionResultado.innerHTML = "Wow, estás dominando la partida, ¿que tal intentar conseguir una racha de victorias?, dale click a reiniciar para ponerte a prueba"
-        deshabilitarBotonesAtaque()
+    if(victoriasJugador === victoriasEnemigo){
+        sectionResultado.innerHTML = "Ha finalizado la partida, has empatado 🙆‍♂️"
+        mostrarSectionReiniciar()
+    } else if(victoriasEnemigo < victoriasJugador){
+        sectionResultado.innerHTML = "Ha finalizado la partida, has ganado la batalla 😎😎😎"
+        mostrarSectionReiniciar()
+    } else {
+        sectionResultado.innerHTML = "Ha finalizado la partida, has perdido la batalla 😣😣😣"
+        mostrarSectionReiniciar()
     }
 }
 //Función para deshabilitar los botones de ataque
-function deshabilitarBotonesAtaque(){
-    botonFuego.disabled = true
-    botonAgua.disabled = true
-    botonTierra.disabled = true
+function mostrarSectionReiniciar(){
     //Codigo que muestra la sección del botón reiniciar
     sectionReiniciar.style.display = "block"
 }
