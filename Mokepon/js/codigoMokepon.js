@@ -29,6 +29,9 @@ let resultadoRonda
 let victoriasJugador = 0
 let victoriasEnemigo = 0
 let lienzo = mapa.getContext("2d")
+let intervalo
+let mapaBackground = new Image()
+mapaBackground.src = "./imagenes/mokemap.png"
 
 let mokepones = []
 
@@ -38,6 +41,14 @@ class Mokepon {
         this.foto = foto
         this.vida = vida
         this.ataques = []
+        this.x = 5
+        this.y = 5
+        this.ancho = 80
+        this.alto = 80
+        this.mapaFoto = new Image()
+        this.mapaFoto.src = foto
+        this.velocidadX = 0
+        this.velocidadY = 0
     }
 }
 
@@ -74,6 +85,7 @@ function iniciarJuego(){
     //Codigo para ocultar secciones de seleccionar ataque y reiniciar
     sectionSeleccionarAtaque.style.display = "none"
     sectionReiniciar.style.display = "none"
+    sectionVerMapa.style.display = "none"
     //Método para cargar las tarjetas por mokepon en HTML
     mokepones.forEach((mokepon) => {
         tarjetaMokepon = `<input type="radio" name="mascota" id=${mokepon.nombre} />
@@ -101,15 +113,8 @@ function elegirMascotaJugador(){
     //Codigo para ocultar la sección de seleccionar mascota y mostrar la sección de seleccionar ataque
     sectionSeleccionarMascota.style.display = "none"
     sectionVerMapa.style.display = "flex"
-    let imagenMascota = new Image()
-    imagenMascota.src = capipepo.foto
-    lienzo.drawImage(
-        imagenMascota,
-        5,
-        5,
-        50,
-        50
-    )
+    iniciarMapa()
+
     // sectionSeleccionarAtaque.style.display = "flex"
     
     //Esta condicional interactua con la elección del jugador
@@ -278,6 +283,73 @@ function mostrarSectionReiniciar(){
 //Función para reiniciar el juego
 function reiniciarJuego(){
     location.reload()
+}
+
+function pintarCanvas() {
+    capipepo.x = capipepo.x + capipepo.velocidadX
+    capipepo.y = capipepo.y + capipepo.velocidadY
+    lienzo.clearRect(0, 0, mapa.width, mapa.height)
+    lienzo.drawImage(
+        mapaBackground,
+        0,
+        0,
+        mapa.width,
+        mapa.height
+    )
+    lienzo.drawImage(
+        capipepo.mapaFoto,
+        capipepo.x,
+        capipepo.y,
+        capipepo.ancho,
+        capipepo.alto
+    )
+}
+
+function moverDerechaPersonaje() {
+    capipepo.velocidadX = 5
+}
+function moverIzquierdaPersonaje() {
+    capipepo.velocidadX = -5
+}
+function moverArribaPersonaje() {
+    capipepo.velocidadY = -5
+}
+function moverAbajoPersonaje() {
+    capipepo.velocidadY = 5
+}
+
+function detenerMovimiento() {
+    capipepo.velocidadX = 0
+    capipepo.velocidadY = 0
+}
+
+function sePresionaTecla(event) {
+    switch (event.key) {
+        case "ArrowUp":
+            moverArribaPersonaje()
+            break
+        case "ArrowDown":
+            moverAbajoPersonaje()
+            break
+        case "ArrowLeft":
+            moverIzquierdaPersonaje()
+            break
+        case "ArrowRight":
+            moverDerechaPersonaje()
+            break
+        default:
+            break
+    }
+}
+
+function iniciarMapa() {
+    mapa.width = 320
+    mapa.height = 240
+    intervalo = setInterval(pintarCanvas, 50)
+
+    window.addEventListener("keydown", sePresionaTecla)
+
+    window.addEventListener("keyup", detenerMovimiento)
 }
 //load es el evento en el que la página HTML termina de cargar
 window.addEventListener("load", iniciarJuego)
