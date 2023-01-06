@@ -34,19 +34,33 @@ let lienzo = mapa.getContext("2d")
 let intervalo
 let mapaBackground = new Image()
 mapaBackground.src = "./imagenes/mokemap.png"
+let alturaQueBuscamos
+let anchoDelMapa = window.innerWidth - 20
+const anchoMaximoMapa = 350
+if(anchoDelMapa > anchoMaximoMapa){
+    anchoDelMapa = anchoMaximoMapa - 20
+}
+alturaQueBuscamos = anchoDelMapa * 600 / 800
+mapa.width = anchoDelMapa
+mapa.height = alturaQueBuscamos
+
+
+
+
+
 
 let mokepones = []
 
 class Mokepon {
-    constructor(nombre, foto, vida, fotoMapa, x = 10, y = 10){
+    constructor(nombre, foto, vida, fotoMapa){
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
         this.ataques = []
-        this.x = x
-        this.y = y
         this.ancho = 40
         this.alto = 40
+        this.x = aleatorio(0, mapa.width - this.ancho)
+        this.y = aleatorio(0, mapa.height - this.alto)
         this.mapaFoto = new Image()
         this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
@@ -67,9 +81,9 @@ let hipodoge = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_att
 let capipepo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png")
 let ratigueya = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png")
 
-let hipodogeEnemigo = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_attack.png", 5, "./imagenes/hipodoge.png", 150, 190)
-let capipepoEnemigo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png", 190, 150)
-let ratigueyaEnemiga = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png", 280, 200)
+let hipodogeEnemigo = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_attack.png", 5, "./imagenes/hipodoge.png")
+let capipepoEnemigo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png")
+let ratigueyaEnemiga = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png")
 
 mokepones.push(hipodoge,capipepo,ratigueya)
 
@@ -382,8 +396,6 @@ function sePresionaTecla(event) {
 }
 
 function iniciarMapa() {
-    mapa.width = 320
-    mapa.height = 240
     objetoMascotaJugador = obtenerObjetoMascota()
     intervalo = setInterval(pintarCanvas, 50)
 
