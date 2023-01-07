@@ -155,6 +155,18 @@ function iniciarJuego(){
     //addEventListeners que permiten disparar funciones con los clicks
     botonSeleccionarMascota.addEventListener("click", elegirMascotaJugador)
     botonReiniciar.addEventListener("click", reiniciarJuego)
+    unirseAlJuego()
+}
+function unirseAlJuego() {
+    fetch("http://localhost:8080/unirse")
+        .then(function (res) {
+            if (res.ok) {
+                res.text()
+                    .then(function (respuesta) {
+                        console.log(respuesta)
+                    })
+            }
+        })
 }
 //Función para obtener números aleatorios
 function aleatorio(min, max){
