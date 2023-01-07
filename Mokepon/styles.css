@@ -70,6 +70,17 @@ input:checked + label {
     align-items: center;
     justify-content: center;
 }
+#ver-mapa button {
+    width: 52px;
+    height: 52px;
+    padding: 8px;
+    border: 8px groove #EC9B3B;
+    box-sizing: border-box;
+    margin-top: 6px;
+    color: #411530;
+    background: #FFE15D;
+    border-radius: 57px;
+}
 
 #seleccionar-ataque {
     flex-direction: column;
@@ -129,7 +140,7 @@ input:checked + label {
 }
 
 
-@media (max-width: 360px){
+@media (max-width: 670px){
     .contenedor-botones-mascotas {
         flex-direction: column;
     }
@@ -138,5 +149,13 @@ input:checked + label {
     }
     #mensajes {
         width: 280px;
+    }
+}
+@media (max-width: 300px){
+    #ver-mapa div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 }
