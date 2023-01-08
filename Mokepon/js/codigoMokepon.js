@@ -53,7 +53,8 @@ mapa.height = alturaQueBuscamos
 let mokepones = []
 
 class Mokepon {
-    constructor(nombre, foto, vida, fotoMapa){
+    constructor(nombre, foto, vida, fotoMapa, id = null){
+        this.id = id
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
@@ -82,57 +83,35 @@ let hipodoge = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_att
 let capipepo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png")
 let ratigueya = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png")
 
-let hipodogeEnemigo = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_attack.png", 5, "./imagenes/hipodoge.png")
-let capipepoEnemigo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png")
-let ratigueyaEnemiga = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png")
-
 mokepones.push(hipodoge,capipepo,ratigueya)
 
-hipodoge.ataques.push(
+const hipodogeAtaques = [
     { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
     { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
     { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
     { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
     { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" }
-)
+]
 
-capipepo.ataques.push(
+const capipepoAtaques = [
     { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
     { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
     { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
     { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
     { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" }
-)
-ratigueya.ataques.push(
+]
+
+const ratigueyaAtaques = [
     { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
     { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
     { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
     { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
     { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱"  }
-)
-
-hipodogeEnemigo.ataques.push(
-    { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
-    { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
-    { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
-    { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
-    { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" }
-)
-
-capipepoEnemigo.ataques.push(
-    { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
-    { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
-    { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱" },
-    { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
-    { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" }
-)
-ratigueyaEnemiga.ataques.push(
-    { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
-    { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
-    { nombre: "FUEGO", id: "boton-ataque-fuego", emoji: "🔥" },
-    { nombre: "AGUA", id: "boton-ataque-agua", emoji: "💧" },
-    { nombre: "TIERRA", id: "boton-ataque-tierra", emoji: "🌱"  }
-)
+]
+//Los puntos suspensivos sirven para pasar los elementos de la variable como si los hubiera escrito directamente
+hipodoge.ataques.push(...hipodogeAtaques)
+capipepo.ataques.push(...capipepoAtaques)
+ratigueya.ataques.push(...ratigueyaAtaques)
 
 function iniciarJuego(){
     //Codigo para ocultar secciones de seleccionar ataque y reiniciar
@@ -395,6 +374,30 @@ function enviarPosicion(x, y) {
             y
         })
     })
+        .then(function (res) {
+            if(res.ok) {
+                res.json()
+                //Al poner un parametro encerrado en las llaves { enemigos } es extraido directamente, por eso se puede usar directamente abajo.
+                .then(function ({ enemigos }){
+                    console.log(enemigos)
+                    enemigos.forEach(function (enemigo) {
+                        let mokeponEnemigo = null
+                        const mokeponNombre = enemigo.mokepon.nombre || ""
+                        if (mokeponNombre === "Hipodoge") {
+                            mokeponEnemigo = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_attack.png", 5, "./imagenes/hipodoge.png")
+                        } else if (mokeponNombre === "Capipepo") {
+                            mokeponEnemigo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png")
+                        } else if (mokeponNombre === "Ratigueya") {
+                            mokeponEnemigo = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png")
+                        }
+                        
+                        mokeponEnemigo.x = enemigo.x
+                        mokeponEnemigo.y = enemigo.y
+                        mokeponEnemigo.pintarMokepon()
+                    })
+                })
+            }
+        })
 }
 
 function moverDerechaPersonaje() {
