@@ -16,6 +16,8 @@ const sectionVerMapa = document.getElementById("ver-mapa")
 const mapa = document.getElementById("mapa")
 
 let jugadorId = null
+let enemigoId = null
+let mokeponesEnemigos = []
 let inputHipodoge
 let inputCapipepo
 let inputRatigueya
@@ -44,11 +46,6 @@ if(anchoDelMapa > anchoMaximoMapa){
 alturaQueBuscamos = anchoDelMapa * 600 / 800
 mapa.width = anchoDelMapa
 mapa.height = alturaQueBuscamos
-
-
-
-
-
 
 let mokepones = []
 
@@ -240,9 +237,38 @@ function secuenciaAtaque(){
                 boton.style.background = "#b6a24a"
                 boton.disabled = true
             }
-            ataqueEnemigoAleatorio()
+
+            if(ataqueJugador.length === 5) {
+                enviarAtaques()
+            }
         })
     })
+}
+function enviarAtaques() {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugador
+        })
+    })
+    intervalo = setInterval(obtenerAtaques(), 50)
+}
+function obtenerAtaques() {
+    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques`)
+        .then(function (res) {
+            if(res.ok) {
+                res.json()
+                    .then(function ({ ataques }) {
+                        if(ataques.length === 5) {
+                            ataqueEnemigo = ataques
+                            iniciarCombate()
+                        }
+                    })
+            }
+        })
 }
 
 //Función para el ataque aleatorio del enemigo (PC)
@@ -261,6 +287,7 @@ function ataqueEnemigoAleatorio(){
 }
 
 function iniciarCombate(){
+    clearInterval(intervalo)
     if(ataqueJugador.length === 5){
         determinarResultadoRonda()
     }
@@ -353,14 +380,10 @@ function pintarCanvas() {
     )
     objetoMascotaJugador.pintarMokepon()
     enviarPosicion(objetoMascotaJugador.x, objetoMascotaJugador.y)
-    hipodogeEnemigo.pintarMokepon()
-    capipepoEnemigo.pintarMokepon()
-    ratigueyaEnemiga.pintarMokepon()
-    if (objetoMascotaJugador.velocidadX !== 0 || objetoMascotaJugador.velocidadY !== 0) {
-        revisarColision(hipodogeEnemigo)
-        revisarColision(capipepoEnemigo)
-        revisarColision(ratigueyaEnemiga)
-    }
+    mokeponesEnemigos.forEach((mokepon) => {
+        mokepon.pintarMokepon()
+        revisarColision(mokepon)
+    })
 }
 function enviarPosicion(x, y) {
     fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
@@ -380,20 +403,21 @@ function enviarPosicion(x, y) {
                 //Al poner un parametro encerrado en las llaves { enemigos } es extraido directamente, por eso se puede usar directamente abajo.
                 .then(function ({ enemigos }){
                     console.log(enemigos)
-                    enemigos.forEach(function (enemigo) {
+                    //map es un método de JS que te permite recorrer un array y devolver como return otro array modificado
+                    mokeponesEnemigos = enemigos.map(function (enemigo) {
                         let mokeponEnemigo = null
                         const mokeponNombre = enemigo.mokepon.nombre || ""
                         if (mokeponNombre === "Hipodoge") {
-                            mokeponEnemigo = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_attack.png", 5, "./imagenes/hipodoge.png")
+                            mokeponEnemigo = new Mokepon("Hipodoge", "./imagenes/mokepons_mokepon_hipodoge_attack.png", 5, "./imagenes/hipodoge.png", enemigo.id)
                         } else if (mokeponNombre === "Capipepo") {
-                            mokeponEnemigo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png")
+                            mokeponEnemigo = new Mokepon("Capipepo", "./imagenes/mokepons_mokepon_capipepo_attack.png", 5, "./imagenes/capipepo.png", enemigo.id)
                         } else if (mokeponNombre === "Ratigueya") {
-                            mokeponEnemigo = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png")
+                            mokeponEnemigo = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png", enemigo.id)
                         }
                         
                         mokeponEnemigo.x = enemigo.x
                         mokeponEnemigo.y = enemigo.y
-                        mokeponEnemigo.pintarMokepon()
+                        return mokeponEnemigo
                     })
                 })
             }
@@ -472,6 +496,8 @@ function revisarColision(enemigo) {
         }
     detenerMovimiento()
     console.log("Se detecta colisión")
+    //Aquí se toma el id enviado desde el backend y se asigna en el Front-end
+    enemigoId = enemigo.id
     clearInterval(intervalo)
     sectionVerMapa.style.display = "none"
     sectionSeleccionarAtaque.style.display = "flex"
