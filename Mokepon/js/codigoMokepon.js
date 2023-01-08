@@ -15,6 +15,7 @@ const contenedorAtaques = document.getElementById("contenedor-botones-ataques")
 const sectionVerMapa = document.getElementById("ver-mapa")
 const mapa = document.getElementById("mapa")
 
+let jugadorId = null
 let inputHipodoge
 let inputCapipepo
 let inputRatigueya
@@ -164,6 +165,7 @@ function unirseAlJuego() {
                 res.text()
                     .then(function (respuesta) {
                         console.log(respuesta)
+                        jugadorId = respuesta
                     })
             }
         })
@@ -196,11 +198,22 @@ function elegirMascotaJugador(){
             reiniciarJuego()
             break
     } extraerAtaques(mascotaJugador)
-
     sectionVerMapa.style.display = "flex"
     iniciarMapa()
+    seleccionarMokepon(mascotaJugador)
 }
 
+function seleccionarMokepon(mascotaJugador) {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mokepon: mascotaJugador
+        })
+    })
+}
 
 //Función para elegir mascota enemiga de forma aleatoria
 function elegirMascotaEnemigo(objetoMascotaEnemigo){
@@ -360,6 +373,7 @@ function pintarCanvas() {
         mapa.height
     )
     objetoMascotaJugador.pintarMokepon()
+    enviarPosicion(objetoMascotaJugador.x, objetoMascotaJugador.y)
     hipodogeEnemigo.pintarMokepon()
     capipepoEnemigo.pintarMokepon()
     ratigueyaEnemiga.pintarMokepon()
@@ -368,6 +382,19 @@ function pintarCanvas() {
         revisarColision(capipepoEnemigo)
         revisarColision(ratigueyaEnemiga)
     }
+}
+function enviarPosicion(x, y) {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        //Cuando hayan claves y valores iguales, puedes dejar solo el valor, JS entiende que clave y valor serán lo mismo.
+        body: JSON.stringify({
+            x,
+            y
+        })
+    })
 }
 
 function moverDerechaPersonaje() {
