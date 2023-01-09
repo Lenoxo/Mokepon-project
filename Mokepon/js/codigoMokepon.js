@@ -135,7 +135,7 @@ function iniciarJuego(){
     unirseAlJuego()
 }
 function unirseAlJuego() {
-    fetch("http://localhost:8080/unirse")
+    fetch("http://192.168.0.18:8080/unirse")
         .then(function (res) {
             if (res.ok) {
                 res.text()
@@ -153,7 +153,7 @@ function aleatorio(min, max){
 //la propiedad innerHTML permite modificar el DOM con strings que se ponen dentro de una etiqueta escogida anteriormente
 function elegirMascotaJugador(){
     //Codigo para ocultar la sección de seleccionar mascota y mostrar la sección de seleccionar ataque
-    sectionSeleccionarMascota.style.display = "none"
+    
     
     //Esta condicional interactua con la elección del jugador
     switch (true){
@@ -171,16 +171,18 @@ function elegirMascotaJugador(){
             break  
         default:
             alert("Selecciona a una mascota para continuar 😄")
-            reiniciarJuego()
+            return
             break
-    } extraerAtaques(mascotaJugador)
+    } 
+    sectionSeleccionarMascota.style.display = "none"
+    extraerAtaques(mascotaJugador)
     sectionVerMapa.style.display = "flex"
     iniciarMapa()
     seleccionarMokepon(mascotaJugador)
 }
 
 function seleccionarMokepon(mascotaJugador) {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}`, {
+    fetch(`http://192.168.0.18:8080/mokepon/${jugadorId}`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -245,7 +247,7 @@ function secuenciaAtaque(){
     })
 }
 function enviarAtaques() {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`, {
+    fetch(`http://192.168.0.18:8080/mokepon/${jugadorId}/ataques`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -257,7 +259,7 @@ function enviarAtaques() {
     intervalo = setInterval(obtenerAtaques(), 50)
 }
 function obtenerAtaques() {
-    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques`)
+    fetch(`http://192.168.0.18:8080/mokepon/${enemigoId}/ataques`)
         .then(function (res) {
             if(res.ok) {
                 res.json()
@@ -386,7 +388,7 @@ function pintarCanvas() {
     })
 }
 function enviarPosicion(x, y) {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
+    fetch(`http://192.168.0.18:8080/mokepon/${jugadorId}/posicion`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -415,8 +417,8 @@ function enviarPosicion(x, y) {
                             mokeponEnemigo = new Mokepon("Ratigueya", "./imagenes/mokepons_mokepon_ratigueya_attack.png", 5, "./imagenes/ratigueya.png", enemigo.id)
                         }
                         
-                        mokeponEnemigo.x = enemigo.x
-                        mokeponEnemigo.y = enemigo.y
+                        mokeponEnemigo.x = enemigo.x || 0
+                        mokeponEnemigo.y = enemigo.y || 0
                         return mokeponEnemigo
                     })
                 })

@@ -19,11 +19,11 @@
         
         <h2 class="subtitulo-mokepon">Recorre el mapa:</h2>
         <canvas id="mapa"></canvas>
-        <button onmouseup="detenerMovimiento()" onmousedown="moverArribaPersonaje()">⬆</button>
+        <button ontouchend="detenerMovimiento()" onmouseup="detenerMovimiento()" ontouchstart="moverArribaPersonaje()" onmousedown="moverArribaPersonaje()">⬆</button>
         <div>
-            <button onmouseup="detenerMovimiento()" onmousedown="moverIzquierdaPersonaje()">⬅</button>
-            <button onmouseup="detenerMovimiento()" onmousedown="moverAbajoPersonaje()">⬇</button>
-            <button onmouseup="detenerMovimiento()" onmousedown="moverDerechaPersonaje()">➡</button>
+            <button ontouchend="detenerMovimiento()" onmouseup="detenerMovimiento()" ontouchstart="moverIzquierdaPersonaje()" onmousedown="moverIzquierdaPersonaje()">⬅</button>
+            <button ontouchend="detenerMovimiento()" onmouseup="detenerMovimiento()" ontouchstart="moverAbajoPersonaje()" onmousedown="moverAbajoPersonaje()">⬇</button>
+            <button ontouchend="detenerMovimiento()" onmouseup="detenerMovimiento()" ontouchstart="moverDerechaPersonaje()" onmousedown="moverDerechaPersonaje()">➡</button>
         </div>
         
     </section>
