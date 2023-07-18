@@ -135,6 +135,7 @@ function iniciarJuego(){
     unirseAlJuego()
 }
 function unirseAlJuego() {
+    // Recuerda que se debe reemplazar esta dirección IP por la de tu dispositivo en la IPv4.
     fetch("http://192.168.0.18:8080/unirse")
         .then(function (res) {
             if (res.ok) {
