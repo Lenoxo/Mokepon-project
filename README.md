@@ -6,7 +6,7 @@ The frontend of the game is built using HTML, CSS, and JavaScript without any fr
 
 ## Table of Contents:
 - [Demo](#demo)
-- [Deploy](#deploy)
+<!-- - [Deploy](#deploy) -->
 - [Installation](#installation)
 - [Game Round Explanation](#game-round-explanation)
 - [Useful Resources](#useful-resources)
@@ -17,9 +17,9 @@ The frontend of the game is built using HTML, CSS, and JavaScript without any fr
 
 ![Mokepon Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTU1cDMwa3B0OHAxbWJodmF3eGdhajg5MnVjb25sOXRxaGVldmFlNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nDq2AnSwugFvlvMDpo/giphy.gif)
 
-### Deploy
+<!-- ### Deploy
 
-Coming soon...
+Coming soon... -->
 
 ### Installation
 
@@ -27,8 +27,9 @@ To install and run Mokepon locally, follow these steps:
 
 1. Clone the repository: `git clone [repository URL]`
 2. Navigate to the project directory: `cd Mokepon-project/mokepon`
-3. Open your terminal and execute: `node index.js`.
-4. Now, you can use Mokepon within your local network devices, remember to edit ip addresses within `Mokepon-project/mokepon/js/codigoMokepon.js`
+3. Open your terminal and execute: `npm install`.
+4. After installing dependencies, run: `node index.js`.
+5. Now, you can use Mokepon within your local network devices, remember to edit ip addresses within `Mokepon-project/mokepon/js/codigoMokepon.js`
     - Replace all `192.168.0.13` to your IPv4 address.
     - You can use `ctrl + f` in VS Code to find and replace it quickly.
 
