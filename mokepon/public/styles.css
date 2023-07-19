@@ -1,161 +1,160 @@
-@import url('https://fonts.googleapis.com/css2?family=Shojumaru&family=Sigmar+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Shojumaru&family=Sigmar+One&display=swap");
 
 body {
-    background-color: #2B3A55;
-    font-family: "Sigmar One", cursive;
-    text-align: center;
+  background-color: #2b3a55;
+  font-family: "Sigmar One", cursive;
+  text-align: center;
 }
 
 #seleccionar-mascota {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .titulo-mokepon {
-    color: #FFFBEB;
-    font-family: "Shojumaru", cursive;
-    font-size: 40px;
+  color: #fffbeb;
+  font-family: "Shojumaru", cursive;
+  font-size: 40px;
 }
 .subtitulo-mokepon {
-    color: #FFFBEB;
-    font-size: 24px;
+  color: #fffbeb;
+  font-size: 24px;
 }
 
 .contenedor-botones-mascotas {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 .contenedor-botones-mascotas img {
-    width: 170px;
+  width: 170px;
 }
 .botones-mascotas {
-    width: 200px;
-    height: 304px;
-    padding: 8px;
-    border: 8px groove #EC9B3B;
-    box-sizing: border-box;
-    margin: 5px;
-    color: #411530;
-    background: #FFE15D;
-    border-radius: 57px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column-reverse;
+  width: 200px;
+  height: 304px;
+  padding: 8px;
+  border: 8px groove #ec9b3b;
+  box-sizing: border-box;
+  margin: 5px;
+  color: #411530;
+  background: #ffe15d;
+  border-radius: 57px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column-reverse;
 }
 .emojis {
-    font-size: 28px;
-    margin: 5px;
+  font-size: 28px;
+  margin: 5px;
 }
 .boton-seleccionar-mascota {
-    margin: 52px;
-    font-size: 18px;
-    color: #FFFBEB;
-    border: 8px groove #9C254D;
-    border-radius: 20px;
-    background: #411530;
-    font-family: "Sigmar One", cursive;
+  margin: 52px;
+  font-size: 18px;
+  color: #fffbeb;
+  border: 8px groove #9c254d;
+  border-radius: 20px;
+  background: #411530;
+  font-family: "Sigmar One", cursive;
 }
 input {
-    display: none
+  display: none;
 }
 
 input:checked + label {
-    background-color: #b6a24a;
+  background-color: #b6a24a;
 }
 
 #ver-mapa {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 #ver-mapa button {
-    width: 52px;
-    height: 52px;
-    padding: 8px;
-    border: 8px groove #EC9B3B;
-    box-sizing: border-box;
-    margin-top: 6px;
-    color: #411530;
-    background: #FFE15D;
-    border-radius: 57px;
+  width: 52px;
+  height: 52px;
+  padding: 8px;
+  border: 8px groove #ec9b3b;
+  box-sizing: border-box;
+  margin-top: 6px;
+  color: #411530;
+  background: #ffe15d;
+  border-radius: 57px;
 }
 
 #seleccionar-ataque {
-    flex-direction: column;
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 .boton-ataque {
-    border: 8px groove #EC9B3B;
-    background: #FFE15D;
-    color: #411530;
-    font-family: "Sigmar One", cursive;
-    padding: 10px;
-    border-radius: 36px;
+  border: 8px groove #ec9b3b;
+  background: #ffe15d;
+  color: #411530;
+  font-family: "Sigmar One", cursive;
+  padding: 10px;
+  border-radius: 36px;
 }
 .boton-ataque:hover {
-    background-color: #b6a24a;
+  background-color: #b6a24a;
 }
 
 #mensajes {
-    display: flex;
-    flex-direction: column;
-    background: #227C70;
-    color: white;
-    border-radius: 24px;
-    align-items: center;
-    width: 480px;
-    padding: 10px;
-    margin: 20px;
+  display: flex;
+  flex-direction: column;
+  background: #227c70;
+  color: white;
+  border-radius: 24px;
+  align-items: center;
+  width: 480px;
+  padding: 10px;
+  margin: 20px;
 }
 
 #boton-reiniciar {
-    font-size: 18px;
-    color: #FFFBEB;
-    border: 8px groove #9C254D;
-    border-radius: 20px;
-    background: #411530;
-    font-family: "Sigmar One", cursive;
+  font-size: 18px;
+  color: #fffbeb;
+  border: 8px groove #9c254d;
+  border-radius: 20px;
+  background: #411530;
+  font-family: "Sigmar One", cursive;
 }
 
 #vidas-y-ataques {
-    display: grid;
-    grid-template-columns: 200px 200px;
-    gap: 4px;
-    background: #434242;
-    border-radius: 20px;
-    color: white;
-    border: 8px groove #9C254D;
+  display: grid;
+  grid-template-columns: 200px 200px;
+  gap: 4px;
+  background: #434242;
+  border-radius: 20px;
+  color: white;
+  border: 8px groove #9c254d;
 }
 
 .hud-jugador {
-    border-right: 8px groove #9C254D;
-    padding: 5px;
+  border-right: 8px groove #9c254d;
+  padding: 5px;
 }
 
 .hud-enemigo {
-    border-left: 8px groove #9C254D;
-    padding: 5px;
+  border-left: 8px groove #9c254d;
+  padding: 5px;
 }
 
-
-@media (max-width: 670px){
-    .contenedor-botones-mascotas {
-        flex-direction: column;
-    }
-    #vidas-y-ataques {
-        grid-template-columns: 124px 124px;
-    }
-    #mensajes {
-        width: 280px;
-    }
+@media (max-width: 670px) {
+  .contenedor-botones-mascotas {
+    flex-direction: column;
+  }
+  #vidas-y-ataques {
+    grid-template-columns: 124px 124px;
+  }
+  #mensajes {
+    width: 280px;
+  }
 }
-@media (max-width: 300px){
-    #ver-mapa div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+@media (max-width: 300px) {
+  #ver-mapa div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
