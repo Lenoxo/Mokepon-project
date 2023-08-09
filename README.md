@@ -4,9 +4,9 @@ Mokepon is a game developed using HTML, CSS, and JavaScript. It is a game simila
 
 The frontend of the game is built using HTML, CSS, and JavaScript without any frameworks. The backend is developed using Node.js and Express.js. This project is my first programming endeavor.
 
+<!-- - [Deploy](#deploy) -->
 ## Table of Contents:
 - [Demo](#demo)
-<!-- - [Deploy](#deploy) -->
 - [Installation](#installation)
 - [Game Round Explanation](#game-round-explanation)
 - [Useful Resources](#useful-resources)
